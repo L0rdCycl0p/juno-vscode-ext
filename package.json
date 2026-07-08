@@ -1,9 +1,9 @@
 {
     "name": "junolang",
     "displayName": "Juno Lang",
-    "version": "0.0.3",
+    "version": "0.0.4",
     "engines": {
-        "vscode": "^1.125.0"
+        "vscode": "^1.90.0"
     },
     "scripts": {
         "compile": "tsc -p ./"
@@ -47,8 +47,8 @@
         "vscode-languageclient": "^10.1.0"
     },
     "devDependencies": {
-        "@types/node": "^26.1.0",
-        "@types/vscode": "^1.125.0",
+        "@types/node": "^26.1.1",
+        "@types/vscode": "^1.90.0",
         "@vscode/vsce": "^3.9.2"
     },
     "configuration": {
