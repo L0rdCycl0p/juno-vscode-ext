@@ -1,9 +1,9 @@
 {
-    "name": "juno",
-    "displayName": "Juno",
+    "name": "junolang",
+    "displayName": "Juno Lang",
     "version": "0.0.1",
     "engines": {
-        "vscode": "^1.90.0"
+        "vscode": "^1.125.0"
     },
     "scripts": {
         "compile": "tsc -p ./"
@@ -11,6 +11,10 @@
     "activationEvents": [
         "onLanguage:juno"
     ],
+    "publisher": "junolang",
+    "repository": {
+        "url": "https://github.com/L0rdCycl0p/juno-vscode-ext"
+    },
     "main": "./out/extension.js",
     "contributes": {
         "languages": [
@@ -42,7 +46,8 @@
     },
     "devDependencies": {
         "@types/node": "^26.1.0",
-        "@types/vscode": "^1.125.0"
+        "@types/vscode": "^1.125.0",
+        "@vscode/vsce": "^3.9.2"
     },
     "configuration": {
         "title": "Juno",
