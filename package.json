@@ -1,0 +1,57 @@
+{
+    "name": "juno",
+    "displayName": "Juno",
+    "version": "0.0.1",
+    "engines": {
+        "vscode": "^1.90.0"
+    },
+    "scripts": {
+        "compile": "tsc -p ./"
+    },
+    "activationEvents": [
+        "onLanguage:juno"
+    ],
+    "main": "./out/extension.js",
+    "contributes": {
+        "languages": [
+            {
+                "id": "juno",
+                "aliases": [
+                    "Juno"
+                ],
+                "extensions": [
+                    ".juno"
+                ],
+                "icon": {
+                    "dark": "./logo-white.png",
+                    "light": "./logo-dark.png"
+                },
+                "configuration": "./language-configuration.json"
+            }
+        ],
+        "grammars": [
+            {
+                "language": "juno",
+                "scopeName": "source.juno",
+                "path": "./syntaxes/juno.tmLanguage.json"
+            }
+        ]
+    },
+    "dependencies": {
+        "vscode-languageclient": "^10.1.0"
+    },
+    "devDependencies": {
+        "@types/node": "^26.1.0",
+        "@types/vscode": "^1.125.0"
+    },
+    "configuration": {
+        "title": "Juno",
+        "properties": {
+            "juno.languageServer.path": {
+                "type": "string",
+                "default": "",
+                "description": "Path to the Juno Language Server executable."
+            }
+        }
+    }
+}

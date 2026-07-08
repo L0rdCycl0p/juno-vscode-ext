@@ -1,0 +1,444 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "Juno",
+	"scopeName": "source.juno",
+	"patterns": [
+		{
+			"include": "#comments"
+		},
+		{
+			"include": "#strings"
+		},
+		{
+			"include": "#chars"
+		},
+		{
+			"include": "#numbers"
+		},
+		{
+			"include": "#keywords"
+		},
+		{
+			"include": "#constants"
+		},
+		{
+			"include": "#functions"
+		},
+		{
+			"include": "#functionCalls"
+		},
+		{
+			"include": "#structs"
+		},
+		{
+			"include": "#types"
+		},
+		{
+			"include": "#variables"
+		},
+		{
+			"include": "#operators"
+		}
+	],
+	"repository": {
+		"functionCalls": {
+			"patterns": [
+				{
+					"match": "\\b([A-Za-z_][A-Za-z0-9_]*)(?=\\()",
+					"captures": {
+						"1": {
+							"name": "support.function.juno"
+						}
+					}
+				},
+				{
+					"match": "\\.([A-Za-z_][A-Za-z0-9_]*)(?=\\()",
+					"captures": {
+						"1": {
+							"name": "support.function.method.juno"
+						}
+					}
+				}
+			]
+		},
+		"imports": {
+			"patterns": [
+				{
+					"begin": "\\b(import)\\b",
+					"beginCaptures": {
+						"1": {
+							"name": "keyword.control.import.juno"
+						}
+					},
+					"end": ";",
+					"patterns": [
+						{
+							"match": "\"[^\"]+\"|(?:\\.?\\.?/)?[A-Za-z0-9_./-]+",
+							"name": "string.unquoted.juno"
+						}
+					]
+				}
+			]
+		},
+		"letStatement": {
+			"patterns": [
+				{
+					"begin": "\\b(let)\\b",
+					"beginCaptures": {
+						"1": {
+							"name": "keyword.control.juno"
+						}
+					},
+					"end": ";",
+					"patterns": [
+						{
+							"match": "\\bmut\\b",
+							"name": "storage.modifier.juno"
+						},
+						{
+							"match": "\\b[A-Za-z_][A-Za-z0-9_]*\\b(?=\\s*:)",
+							"name": "variable.other.definition.juno"
+						},
+						{
+							"include": "#types"
+						},
+						{
+							"include": "#numbers"
+						},
+						{
+							"include": "#strings"
+						},
+						{
+							"include": "#constants"
+						}
+					]
+				}
+			]
+		},
+		"returnStatement": {
+			"patterns": [
+				{
+					"match": "\\breturn\\b",
+					"name": "keyword.control.return.juno"
+				}
+			]
+		},
+		"loops": {
+			"patterns": [
+				{
+					"match": "\\b(loop|while|for|in|break|continue)\\b",
+					"name": "keyword.control.loop.juno"
+				}
+			]
+		},
+		"conditions": {
+			"patterns": [
+				{
+					"match": "\\b(if|else)\\b",
+					"name": "keyword.control.conditional.juno"
+				}
+			]
+		},
+		"brackets": {
+			"patterns": [
+				{
+					"match": "[(){}\\[\\]]",
+					"name": "punctuation.section.juno"
+				}
+			]
+		},
+		"punctuation": {
+			"patterns": [
+				{
+					"match": "[,:;]",
+					"name": "punctuation.separator.juno"
+				}
+			]
+		},
+		"comments": {
+			"patterns": [
+				{
+					"name": "comment.line.double-slash.juno",
+					"match": "//.*$"
+				}
+			]
+		},
+		"strings": {
+			"patterns": [
+				{
+					"name": "string.quoted.double.juno",
+					"begin": "\"",
+					"end": "\"",
+					"patterns": [
+						{
+							"name": "constant.character.escape.juno",
+							"match": "\\\\."
+						}
+					]
+				}
+			]
+		},
+		"chars": {
+			"patterns": [
+				{
+					"name": "string.quoted.single.juno",
+					"match": "'(?:\\\\.|[^'])'"
+				}
+			]
+		},
+		"numbers": {
+			"patterns": [
+				{
+					"name": "constant.numeric.juno",
+					"match": "\\b\\d+(?:\\.\\d+)?\\b"
+				}
+			]
+		},
+		"constants": {
+			"patterns": [
+				{
+					"name": "constant.language.boolean.juno",
+					"match": "\\b(true|false)\\b"
+				}
+			]
+		},
+		"keywords": {
+			"patterns": [
+				{
+					"name": "keyword.control.juno",
+					"match": "\\b(fn|let|mut|if|else|while|for|loop|return|break|continue|import|struct|in)\\b"
+				}
+			]
+		},
+		"fieldAccess": {
+			"patterns": [
+				{
+					"match": "\\.([A-Za-z_][A-Za-z0-9_]*)",
+					"captures": {
+						"1": {
+							"name": "variable.other.member.juno"
+						}
+					}
+				}
+			]
+		},
+		"namespaceChain": {
+			"patterns": [
+				{
+					"match": "[A-Za-z_][A-Za-z0-9_]*(?=::)",
+					"name": "entity.name.namespace.juno"
+				}
+			]
+		},
+		"types": {
+			"patterns": [
+				{
+					"name": "storage.type.juno",
+					"match": "(?<=:)\\s*[&*]*\\s*(?:\\[[0-9]+\\])?\\s*[A-Za-z_][A-Za-z0-9_:]*(?:<[^>]+>)?"
+				},
+				{
+					"name": "storage.type.return-type.juno",
+					"match": "(?<=->)\\s*[&*]*\\s*(?:\\[[0-9]+\\])?\\s*[A-Za-z_][A-Za-z0-9_:]*(?:<[^>]+>)?"
+				}
+			]
+		},
+		"functions": {
+			"patterns": [
+				{
+					"begin": "\\b(fn)\\b",
+					"beginCaptures": {
+						"1": {
+							"name": "keyword.control.juno"
+						}
+					},
+					"end": "(?=\\{)",
+					"patterns": [
+						{
+							"match": "[A-Za-z_][A-Za-z0-9_]*",
+							"name": "entity.name.function.juno"
+						},
+						{
+							"include": "#types"
+						},
+						{
+							"include": "#parameters"
+						}
+					]
+				}
+			]
+		},
+		"parameters": {
+			"patterns": [
+				{
+					"match": "\\b([A-Za-z_][A-Za-z0-9_]*)(\\s*:)",
+					"captures": {
+						"1": {
+							"name": "variable.parameter.juno"
+						},
+						"2": {
+							"name": "punctuation.separator.type.juno"
+						}
+					}
+				}
+			]
+		},
+		"structs": {
+			"patterns": [
+				{
+					"begin": "\\b(struct)\\b",
+					"beginCaptures": {
+						"1": {
+							"name": "keyword.control.juno"
+						}
+					},
+					"end": "\\}",
+					"patterns": [
+						{
+							"match": "[A-Za-z_][A-Za-z0-9_]*",
+							"name": "entity.name.class.juno"
+						},
+						{
+							"include": "#structFields"
+						}
+					]
+				}
+			]
+		},
+		"structFields": {
+			"patterns": [
+				{
+					"match": "\\b([A-Za-z_][A-Za-z0-9_]*)(\\s*:)",
+					"captures": {
+						"1": {
+							"name": "variable.other.member.juno"
+						},
+						"2": {
+							"name": "punctuation.separator.type.juno"
+						}
+					}
+				}
+			]
+		},
+		"structInit": {
+			"patterns": [
+				{
+					"begin": "\\b([A-Z][A-Za-z0-9_]*)\\s*\\{",
+					"beginCaptures": {
+						"1": {
+							"name": "entity.name.type.juno"
+						}
+					},
+					"end": "\\}",
+					"patterns": [
+						{
+							"match": "\\b([A-Za-z_][A-Za-z0-9_]*)(?=\\s*:)",
+							"name": "variable.other.member.juno"
+						},
+						{
+							"include": "#strings"
+						},
+						{
+							"include": "#numbers"
+						},
+						{
+							"include": "#constants"
+						}
+					]
+				}
+			]
+		},
+		"members": {
+			"patterns": [
+				{
+					"match": "\\.([A-Za-z_][A-Za-z0-9_]*)",
+					"captures": {
+						"1": {
+							"name": "variable.other.member.juno"
+						}
+					}
+				}
+			]
+		},
+		"namespaces": {
+			"patterns": [
+				{
+					"match": "\\b([A-Za-z_][A-Za-z0-9_]*)(::)",
+					"captures": {
+						"1": {
+							"name": "entity.name.namespace.juno"
+						},
+						"2": {
+							"name": "keyword.operator.juno"
+						}
+					}
+				}
+			]
+		},
+		"namedArguments": {
+			"patterns": [
+				{
+					"match": "\\b([A-Za-z_][A-Za-z0-9_]*)(?=\\s*=)",
+					"name": "variable.parameter.juno"
+				}
+			]
+		},
+		"builtinTypes": {
+			"patterns": [
+				{
+					"match": "\\b(i8|i16|i32|i64|u8|u16|u32|u64|f32|f64|bool|char|void)\\b",
+					"name": "support.type.builtin.juno"
+				}
+			]
+		},
+		"variables": {
+			"patterns": [
+				{
+					"match": "\\b(let)(\\s+mut)?\\s+([A-Za-z_][A-Za-z0-9_]*)",
+					"captures": {
+						"1": {
+							"name": "keyword.control.juno"
+						},
+						"2": {
+							"name": "storage.modifier.juno"
+						},
+						"3": {
+							"name": "variable.language.juno"
+						}
+					}
+				}
+			]
+		},
+		"operators": {
+			"patterns": [
+				{
+					"match": "::",
+					"name": "keyword.operator.namespace.juno"
+				},
+				{
+					"match": "->",
+					"name": "storage.type.function.arrow.juno"
+				},
+				{
+					"match": "&&|\\|\\|",
+					"name": "keyword.operator.logical.juno"
+				},
+				{
+					"match": "==|!=|<=|>=|<|>",
+					"name": "keyword.operator.comparison.juno"
+				},
+				{
+					"match": "\\+|-|\\*|/|%",
+					"name": "keyword.operator.arithmetic.juno"
+				},
+				{
+					"match": "=",
+					"name": "keyword.operator.assignment.juno"
+				},
+				{
+					"match": "&|!",
+					"name": "keyword.operator.unary.juno"
+				}
+			]
+		}
+	}
+}
